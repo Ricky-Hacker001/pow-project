@@ -1,0 +1,203 @@
+/* frontend/src/App.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+  --glow-primary: rgba(118, 122, 245, 0.8);
+  --glow-secondary: rgba(0, 255, 255, 0.7);
+  --color-success: #00ff9b;
+  --color-error: #ff4d4d;
+  --bg-dark: #12141d;
+  --bg-card: #1a1d2b;
+  --text-primary: #e0e1ff;
+  --text-secondary: #8b94c3;
+  --border-color: rgba(139, 148, 195, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Subtle background grid effect */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image: linear-gradient(var(--border-color) 1px, transparent 1px), linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.3;
+  z-index: -1;
+}
+
+.container {
+  background-color: var(--bg-card);
+  padding: 40px;
+  border-radius: 15px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0 40px rgba(0,0,0,0.3), 0 0 25px var(--glow-primary);
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  animation: floatIn 1s ease-out forwards;
+}
+
+@keyframes floatIn {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+h1 {
+  font-size: 2.5em;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #fff;
+  text-shadow: 0 0 10px var(--glow-primary);
+}
+
+p { color: var(--text-secondary); margin-bottom: 30px; }
+
+/* --- Upload Area --- */
+.upload-area {
+  border: 2px dashed var(--border-color);
+  border-radius: 10px;
+  padding: 40px;
+  margin-bottom: 25px;
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.upload-area.active {
+  border-color: var(--glow-secondary);
+  box-shadow: 0 0 20px var(--glow-secondary);
+}
+
+.upload-area .icon {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 20px;
+  stroke: var(--glow-primary);
+  stroke-width: 1.5;
+  transition: all 0.3s ease;
+}
+
+.upload-area.active .icon { stroke: var(--glow-secondary); }
+.upload-area p { margin-bottom: 20px; font-weight: 500; }
+input[type="file"] { display: none; }
+
+.file-label {
+  background: transparent;
+  color: var(--text-primary);
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.file-label:hover {
+  background-color: var(--glow-primary);
+  color: var(--bg-card);
+  border-color: var(--glow-primary);
+  box-shadow: 0 0 15px var(--glow-primary);
+}
+
+.file-name {
+  margin-top: 15px;
+  font-family: 'Roboto Mono', monospace;
+  color: var(--glow-secondary);
+}
+
+/* --- Processing Animation --- */
+.processing-container {
+  padding: 50px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.scanner {
+  width: 150px;
+  height: 150px;
+  border: 2px solid var(--glow-primary);
+  border-radius: 50%;
+  position: relative;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.scanner .body {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, transparent, var(--bg-card) 70%);
+  position: relative;
+  overflow: hidden;
+}
+
+.scanner .body::after {
+  content: '';
+  position: absolute;
+  width: 100%; height: 100%;
+  background: linear-gradient(to top, transparent, var(--glow-secondary));
+  animation: scan 2s infinite linear;
+}
+
+.processing-text {
+  margin-top: 20px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1.1em;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+}
+
+@keyframes scan {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(100%); }
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 10px var(--glow-primary); }
+  50% { box-shadow: 0 0 30px var(--glow-primary); }
+}
+
+/* --- Status Log --- */
+.status-log {
+  margin-top: 30px;
+  padding: 15px 20px;
+  background-color: #00000030;
+  border-radius: 10px;
+  text-align: left;
+  min-height: 140px;
+  max-height: 200px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.9em;
+  color: var(--text-secondary);
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  box-shadow: inset 0 0 10px #00000080;
+}
+
+.log-line {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+  padding: 3px 0;
+}
+.log-line.success { color: var(--color-success); font-weight: 500; }
+.log-line.error { color: var(--color-error); font-weight: 500; }
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
